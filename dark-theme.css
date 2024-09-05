@@ -1,0 +1,35 @@
+/* Dark theme with larger sizes */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    color: white; /* White text */
+    font-size: 1.2em; /* Larger text */
+}
+
+#watermark {
+    text-align: center;
+    margin-top: 20px;
+    color: #00bfff;
+    font-size: 1.5em; /* Larger watermark */
+}
+
+#menu, #settings {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#results {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2em; /* Larger results */
+}
+
+button {
+    margin: 15px;
+    padding: 15px 30px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+}
