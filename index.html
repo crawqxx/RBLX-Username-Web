@@ -4,25 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
-    <link id="theme-style" rel="stylesheet" href="dark-theme.css">
+    <style>
+        /* Dark theme with larger sizes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: white; /* White text */
+            font-size: 1.2em; /* Larger text */
+        }
+
+        #watermark {
+            text-align: center;
+            margin-top: 20px;
+            color: #00bfff;
+            font-size: 1.5em; /* Larger watermark */
+        }
+
+        #menu, #settings {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em; /* Larger results */
+        }
+
+        button {
+            margin: 15px;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em; /* Larger buttons */
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        pre {
+            color: #00bfff;
+        }
+
+        p {
+            color: white;
+            font-size: 1.2em; /* Larger paragraphs */
+        }
+    </style>
 </head>
 <body>
 
 <div id="watermark">
     <pre>
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-─██████████████─████████████████───██████████████─██████──────────██████─██████████████───████████──████████─████████──████████─
-─██░░░░░░░░░░██─██░░░░░░░░░░░░██───██░░░░░░░░░░██─██░░██──────────██░░██─██░░░░░░░░░░██───██░░░░██──██░░░░██─██░░░░██──██░░░░██─
-─██░░██████████─██░░████████░░██───██░░██████░░██─██░░██──────────██░░██─██░░██████░░██───████░░██──██░░████─████░░██──██░░████─
-─██░░██─────────██░░██────██░░██───██░░██──██░░██─██░░██──────────██░░██─██░░██──██░░██─────██░░░░██░░░░██─────██░░░░██░░░░██───
-─██░░██─────────██░░████████░░██───██░░██████░░██─██░░██──██████──██░░██─██░░██──██░░██─────████░░░░░░████─────████░░░░░░████───
-─██░░██─────────██░░░░░░░░░░░░██───██░░░░░░░░░░██─██░░██──██░░██──██░░██─██░░██──██░░██───────██░░░░░░██─────────██░░░░░░██─────
-─██░░██─────────██░░██████░░████───██░░██████░░██─██░░██──██░░██──██░░██─██░░██──██░░██─────████░░░░░░████─────████░░░░░░████───
-─██░░██─────────██░░██──██░░██─────██░░██──██░░██─██░░██████░░██████░░██─██░░██──██░░██─────██░░░░██░░░░██─────██░░░░██░░░░██───
-─██░░██████████─██░░██──██░░██████─██░░██──██░░██─██░░░░░░░░░░░░░░░░░░██─██░░██████░░████─████░░██──██░░████─████░░██──██░░████─
-─██░░░░░░░░░░██─██░░██──██░░░░░░██─██░░██──██░░██─██░░██████░░██████░░██─██░░░░░░░░░░░░██─██░░░░██──██░░░░██─██░░░░██──██░░░░██─
-─██████████████─██████──██████████─██████──██████─██████──██████──██████─████████████████─████████──████████─████████──████████─
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    ░█████╗░██████╗░░█████╗░░██╗░░░░░░░██╗░██████╗░██╗░░██╗██╗░░██╗
+    ██╔══██╗██╔══██╗██╔══██╗░██║░░██╗░░██║██╔═══██╗╚██╗██╔╝╚██╗██╔╝
+    ██║░░╚═╝██████╔╝███████║░╚██╗████╗██╔╝██║██╗██║░╚███╔╝░░╚███╔╝░
+    ██║░░██╗██╔══██╗██╔══██║░░████╔═████║░╚██████╔╝░██╔██╗░░██╔██╗░
+    ╚█████╔╝██║░░██║██║░░██║░░╚██╔╝░╚██╔╝░░╚═██╔═╝░██╔╝╚██╗██╔╝╚██╗
+    ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝
+          
+          RBLX-Username v1.0 Beta
     </pre>
 </div>
 
@@ -35,13 +82,88 @@
 <div id="settings" style="display: none;">
     <p>Settings Menu:</p>
     <button onclick="toggleShowTakenUsernames()">Toggle showing taken usernames (current: <span id="showTakenUsernamesStatus">On</span>)</button>
-    <button onclick="toggleTheme()">Switch to light theme</button>
     <button onclick="backToMainMenu()">Back to main menu</button>
 </div>
 
 <div id="results"></div>
 
-<script src="main.js"></script>
+<script>
+    let showTakenUsernames = true;
+
+    function generateRandomUsername(length = 5) {
+        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789_';
+        let username = '';
+
+        while (true) {
+            for (let i = 0; i < length; i++) {
+                username += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            if ((/\d/.test(username) || username.includes('_')) && !username.startsWith('_') && !username.endsWith('_')) {
+                return username;
+            }
+            username = ''; // Reset if invalid
+        }
+    }
+
+    async function checkRobloxUsernameExists(username) {
+        try {
+            const response = await fetch(`/check-username?username=${username}`, { method: 'GET' });
+            if (response.ok) {
+                return true; // Username exists
+            } else {
+                return false; // Username doesn't exist
+            }
+        } catch (error) {
+            console.error('Failed to fetch username data:', error);
+            return 'Network error'; // Handling fetch failure
+        }
+    }
+
+    async function startGenerating() {
+        const numberOfUsernames = prompt("Enter how many usernames you want to generate:");
+        if (!numberOfUsernames || isNaN(numberOfUsernames)) {
+            alert("Invalid input. Please enter a valid number.");
+            return;
+        }
+
+        document.getElementById('results').innerHTML = "Generating usernames...";
+        for (let i = 0; i < parseInt(numberOfUsernames); i++) {
+            const randomUsername = generateRandomUsername();
+            const isTaken = await checkRobloxUsernameExists(randomUsername);
+
+            if (isTaken === 'Network error') {
+                document.getElementById('results').innerHTML += `<p>${randomUsername} - Network issue: Unable to check username</p>`;
+            } else if (isTaken) {
+                if (showTakenUsernames) {
+                    document.getElementById('results').innerHTML += `<p>${randomUsername} - Account exists (taken)</p>`;
+                }
+            } else {
+                document.getElementById('results').innerHTML += `<p>${randomUsername} - Account does not exist (available)</p>`;
+            }
+        }
+    }
+
+    function openSettings() {
+        document.getElementById('menu').style.display = 'none';
+        document.getElementById('settings').style.display = 'block';
+    }
+
+    function toggleShowTakenUsernames() {
+        showTakenUsernames = !showTakenUsernames;
+        document.getElementById('showTakenUsernamesStatus').textContent = showTakenUsernames ? 'On' : 'Off';
+    }
+
+    function backToMainMenu() {
+        document.getElementById('settings').style.display = 'none';
+        document.getElementById('menu').style.display = 'block';
+    }
+
+    function exit() {
+        alert("Exiting...");
+        window.close();  // This will not work in most browsers unless initiated by user action
+    }
+</script>
 
 </body>
 </html>
