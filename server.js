@@ -13,16 +13,15 @@ app.get('/check-username', async (req, res) => {
     }
 
     try {
-        // Make request to Roblox profile URL
+        // Fetch the Roblox profile page
         const url = `https://www.roblox.com/users/profile?username=${username}`;
         const response = await axios.get(url);
+        
+        // Check for the existence of the profile by looking for a specific marker in the HTML
+        const profilePageMarker = 'UserProfilePage'; // Modify based on the actual HTML content
+        const exists = response.data.includes(profilePageMarker);
 
-        // Check response to determine if username is taken
-        if (response.status === 200 && response.data.includes('UserProfilePage')) {
-            res.json({ exists: true });
-        } else {
-            res.json({ exists: false });
-        }
+        res.json({ exists });
     } catch (error) {
         console.error('Failed to fetch username data:', error);
         res.status(500).json({ error: 'Network error' });
@@ -30,5 +29,5 @@ app.get('/check-username', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
