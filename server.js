@@ -1,33 +1,40 @@
-const express = require('express');
-const axios = require('axios'); // Ensure axios is installed
-const app = express();
-const PORT = process.env.PORT || 3000; // Use environment variable for PORT
+// checkUsername.js
+const axios = require('axios');
 
-app.use(express.static('public'));
-
-app.get('/check-username', async (req, res) => {
-    const { username } = req.query;
+exports.handler = async function(event, context) {
+    const username = event.queryStringParameters.username;
 
     if (!username) {
-        return res.status(400).json({ error: 'Username is required' });
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ error: 'Username is required' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
     }
 
     try {
-        // Fetch the Roblox profile page
         const url = `https://www.roblox.com/users/profile?username=${username}`;
         const response = await axios.get(url);
         
-        // Check for the existence of the profile by looking for a specific marker in the HTML
-        const profilePageMarker = 'UserProfilePage'; // Modify based on the actual HTML content
+        const profilePageMarker = 'UserProfilePage'; // Adjust this as needed
         const exists = response.data.includes(profilePageMarker);
 
-        res.json({ exists });
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ exists }),
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
     } catch (error) {
-        console.error('Failed to fetch username data:', error);
-        res.status(500).json({ error: 'Network error' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Network error' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
     }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+};
