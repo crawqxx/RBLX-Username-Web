@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
     <style>
-        /* Dark theme */
+        /* Dark theme with larger sizes */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #1e1e1e;
-            color: #d4d4d4;
+            color: white; /* White text */
+            font-size: 1.2em; /* Larger text */
         }
 
         #watermark {
             text-align: center;
             margin-top: 20px;
             color: #00bfff;
+            font-size: 1.5em; /* Larger watermark */
         }
 
         #menu, #settings {
@@ -28,16 +30,18 @@
         #results {
             margin-top: 20px;
             text-align: center;
+            font-size: 1.2em; /* Larger results */
         }
 
         button {
-            margin: 10px;
-            padding: 10px 20px;
+            margin: 15px;
+            padding: 15px 30px;
             cursor: pointer;
             background-color: #333;
-            color: #d4d4d4;
+            color: white;
             border: none;
             border-radius: 5px;
+            font-size: 1.2em; /* Larger buttons */
         }
 
         button:hover {
@@ -49,7 +53,8 @@
         }
 
         p {
-            color: #d4d4d4;
+            color: white;
+            font-size: 1.2em; /* Larger paragraphs */
         }
     </style>
 </head>
@@ -103,9 +108,7 @@
 
     async function checkRobloxUsernameExists(username) {
         try {
-            const response = await fetch(`https://www.roblox.com/users/profile?username=${username}`, { method: 'GET' });
-            
-            // Checking for CORS issues (status code not 200)
+            const response = await fetch(`/check-username?username=${username}`, { method: 'GET' });
             if (response.ok) {
                 return true; // Username exists
             } else {
@@ -113,7 +116,7 @@
             }
         } catch (error) {
             console.error('Failed to fetch username data:', error);
-            return 'CORS issue or network error'; // Handling fetch failure
+            return 'Network error'; // Handling fetch failure
         }
     }
 
@@ -129,8 +132,8 @@
             const randomUsername = generateRandomUsername();
             const isTaken = await checkRobloxUsernameExists(randomUsername);
 
-            if (isTaken === 'CORS issue or network error') {
-                document.getElementById('results').innerHTML += `<p>${randomUsername} - CORS issue: Unable to check username</p>`;
+            if (isTaken === 'Network error') {
+                document.getElementById('results').innerHTML += `<p>${randomUsername} - Network issue: Unable to check username</p>`;
             } else if (isTaken) {
                 if (showTakenUsernames) {
                     document.getElementById('results').innerHTML += `<p>${randomUsername} - Account exists (taken)</p>`;
@@ -158,7 +161,7 @@
 
     function exit() {
         alert("Exiting...");
-        window.close();  // Does not work in most browsers unless initiated by user action
+        window.close();  // This will not work in most browsers unless initiated by user action
     }
 </script>
 
