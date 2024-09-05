@@ -1,18 +1,19 @@
-/* Dark theme with larger sizes */
+/* Dark theme with consistent sizes */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #1e1e1e;
-    color: white; /* White text */
-    font-size: 1.2em; /* Larger text */
+    color: white;
+    font-size: 1.1em; /* 110% of normal size */
+    text-align: center;
 }
 
 #watermark {
     text-align: center;
     margin-top: 20px;
     color: #00bfff;
-    font-size: 1.5em; /* Larger watermark */
+    font-size: 1.3em; /* 110% of normal watermark size */
 }
 
 #menu, #settings {
@@ -23,13 +24,26 @@ body {
 #results {
     margin-top: 20px;
     text-align: center;
-    font-size: 1.2em; /* Larger results */
+    font-size: 1.1em; /* 110% of normal results size */
 }
 
 button {
-    margin: 15px;
-    padding: 15px 30px;
+    margin: 10px;
+    padding: 10px 20px;
     cursor: pointer;
-    background-color: #333;
+    border: none;
     color: white;
+    font-size: 1em; /* Consistent button size */
+}
+
+button.primary {
+    background-color: #333;
+}
+
+button.secondary {
+    background-color: #444;
+}
+
+button:hover {
+    opacity: 0.8;
 }
