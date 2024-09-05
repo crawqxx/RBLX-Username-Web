@@ -100,21 +100,20 @@
 
     async function checkRobloxUsernameExists(username) {
         try {
-            const url = `https://www.roblox.com/users/profile?username=${username}`;
+            const url = `https://crawqxx.netlify.app/.netlify/functions/checkUsername?username=${username}`;
             const response = await fetch(url);
-
+        
             if (response.ok) {
-                const text = await response.text();
-                const exists = text.includes('UserProfilePage'); // Check for a specific marker in the HTML
-                return exists;
+                const data = await response.json();
+                return data.exists;
             } else {
                 return 'Network error';
             }
         } catch (error) {
             console.error('Failed to fetch username data:', error);
             return 'Network error';
-        }
     }
+}
 
     async function startGenerating() {
         const numberOfUsernames = prompt("Enter how many usernames you want to generate:");
