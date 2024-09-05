@@ -1,30 +1,34 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const axios = require('axios');
 const app = express();
 const port = 3000;
 
-app.use(express.static('public')); // Serve static files from the 'public' directory
+// Enable CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
+// Route to check Roblox username
 app.get('/check-username', async (req, res) => {
-    const username = req.query.username;
-    if (!username) {
-        return res.status(400).send('Username query parameter is required');
-    }
+    const { username } = req.query;
 
-    const url = `https://www.roblox.com/users/profile?username=${username}`;
     try {
-        const response = await fetch(url);
-        if (response.ok) {
-            res.status(200).send('taken');
+        const response = await axios.get(`https://www.roblox.com/users/profile?username=${username}`);
+
+        if (response.status === 200) {
+            res.json({ taken: true });
         } else {
-            res.status(200).send('available');
+            res.json({ taken: false });
         }
     } catch (error) {
-        console.error('Error fetching username:', error);
-        res.status(500).send('error');
+        console.error('Error fetching from Roblox:', error);
+        res.status(500).json({ error: 'Failed to check username' });
     }
 });
 
+// Start server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
