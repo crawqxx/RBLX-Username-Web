@@ -1,15 +1,30 @@
 const express = require('express');
-const path = require('path');
+const fetch = require('node-fetch');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
-// Serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public')); // Serve static files from the 'public' directory
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/check-username', async (req, res) => {
+    const username = req.query.username;
+    if (!username) {
+        return res.status(400).send('Username query parameter is required');
+    }
+
+    const url = `https://www.roblox.com/users/profile?username=${username}`;
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            res.status(200).send('taken');
+        } else {
+            res.status(200).send('available');
+        }
+    } catch (error) {
+        console.error('Error fetching username:', error);
+        res.status(500).send('error');
+    }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
