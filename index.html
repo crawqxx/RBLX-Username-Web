@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
     <style>
-        /* Dark theme with original sizes */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #1e1e1e;
-            color: white; /* White text */
-            font-size: 1.2em; /* Original text size */
+            color: white;
+            font-size: 1.2em;
         }
 
         #watermark {
             text-align: center;
             margin-top: 20px;
             color: #00bfff;
-            font-size: 1.5em; /* Original watermark size */
+            font-size: 1.5em;
         }
 
         #menu, #settings {
@@ -30,7 +29,7 @@
         #results {
             margin-top: 20px;
             text-align: center;
-            font-size: 1.2em; /* Original results size */
+            font-size: 1.2em;
         }
 
         button {
@@ -41,7 +40,7 @@
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 1.2em; /* Original button size */
+            font-size: 1.2em;
         }
 
         button:hover {
@@ -54,7 +53,7 @@
 
         p {
             color: white;
-            font-size: 1.2em; /* Original paragraph size */
+            font-size: 1.2em;
         }
     </style>
 </head>
@@ -69,7 +68,7 @@
     ╚█████╔╝██║░░██║██║░░██║░░╚██╔╝░╚██╔╝░░╚═██╔═╝░██╔╝╚██╗██╔╝╚██╗
     ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝
           
-    RBLX-Username v1.0 Beta
+          RBLX-Username v1.0 Beta
     </pre>
 </div>
 
@@ -108,15 +107,16 @@
 
     async function checkRobloxUsernameExists(username) {
         try {
-            const response = await fetch(`/check-username?username=${username}`, { method: 'GET' });
+            const response = await fetch(`/check-username?username=${username}`);
             if (response.ok) {
-                return (await response.json()).exists;
+                const data = await response.json();
+                return data.exists;
             } else {
                 return 'Network error';
             }
         } catch (error) {
             console.error('Failed to fetch username data:', error);
-            return 'Network error'; // Handling fetch failure
+            return 'Network error';
         }
     }
 
@@ -161,7 +161,6 @@
 
     function exit() {
         alert("Exiting...");
-        window.close();  // This will not work in most browsers unless initiated by user action
     }
 </script>
 
