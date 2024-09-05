@@ -13,25 +13,21 @@
             color: white;
             font-size: 1.2em;
         }
-
         #watermark {
             text-align: center;
             margin-top: 20px;
             color: #00bfff;
             font-size: 1.5em;
         }
-
         #menu, #settings {
             text-align: center;
             margin-top: 20px;
         }
-
         #results {
             margin-top: 20px;
             text-align: center;
             font-size: 1.2em;
         }
-
         button {
             margin: 15px;
             padding: 15px 30px;
@@ -42,15 +38,12 @@
             border-radius: 5px;
             font-size: 1.2em;
         }
-
         button:hover {
             background-color: #555;
         }
-
         pre {
             color: #00bfff;
         }
-
         p {
             color: white;
             font-size: 1.2em;
@@ -107,10 +100,13 @@
 
     async function checkRobloxUsernameExists(username) {
         try {
-            const response = await fetch(`/check-username?username=${username}`);
+            const url = `https://www.roblox.com/users/profile?username=${username}`;
+            const response = await fetch(url);
+
             if (response.ok) {
-                const data = await response.json();
-                return data.exists;
+                const text = await response.text();
+                const exists = text.includes('UserProfilePage'); // Check for a specific marker in the HTML
+                return exists;
             } else {
                 return 'Network error';
             }
