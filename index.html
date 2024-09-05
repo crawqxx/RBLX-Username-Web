@@ -4,72 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
-    <style>
-        /* Dark theme with larger sizes */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1e1e1e;
-            color: white; /* White text */
-            font-size: 1.2em; /* Larger text */
-        }
-
-        #watermark {
-            text-align: center;
-            margin-top: 20px;
-            color: #00bfff;
-            font-size: 1.5em; /* Larger watermark */
-        }
-
-        #menu, #settings {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #results {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.2em; /* Larger results */
-        }
-
-        button {
-            margin: 15px;
-            padding: 15px 30px;
-            cursor: pointer;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em; /* Larger buttons */
-        }
-
-        button:hover {
-            background-color: #555;
-        }
-
-        pre {
-            color: #00bfff;
-        }
-
-        p {
-            color: white;
-            font-size: 1.2em; /* Larger paragraphs */
-        }
-    </style>
+    <link id="theme-style" rel="stylesheet" href="dark-theme.css">
 </head>
 <body>
 
 <div id="watermark">
     <pre>
-    ░█████╗░██████╗░░█████╗░░██╗░░░░░░░██╗░██████╗░██╗░░██╗██╗░░██╗
-    ██╔══██╗██╔══██╗██╔══██╗░██║░░██╗░░██║██╔═══██╗╚██╗██╔╝╚██╗██╔╝
-    ██║░░╚═╝██████╔╝███████║░╚██╗████╗██╔╝██║██╗██║░╚███╔╝░░╚███╔╝░
-    ██║░░██╗██╔══██╗██╔══██║░░████╔═████║░╚██████╔╝░██╔██╗░░██╔██╗░
-    ╚█████╔╝██║░░██║██║░░██║░░╚██╔╝░╚██╔╝░░╚═██╔═╝░██╔╝╚██╗██╔╝╚██╗
-    ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝
-          
-          RBLX-Username v1.0 Beta
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+─██████████████─████████████████───██████████████─██████──────────██████─██████████████───████████──████████─████████──████████─
+─██░░░░░░░░░░██─██░░░░░░░░░░░░██───██░░░░░░░░░░██─██░░██──────────██░░██─██░░░░░░░░░░██───██░░░░██──██░░░░██─██░░░░██──██░░░░██─
+─██░░██████████─██░░████████░░██───██░░██████░░██─██░░██──────────██░░██─██░░██████░░██───████░░██──██░░████─████░░██──██░░████─
+─██░░██─────────██░░██────██░░██───██░░██──██░░██─██░░██──────────██░░██─██░░██──██░░██─────██░░░░██░░░░██─────██░░░░██░░░░██───
+─██░░██─────────██░░████████░░██───██░░██████░░██─██░░██──██████──██░░██─██░░██──██░░██─────████░░░░░░████─────████░░░░░░████───
+─██░░██─────────██░░░░░░░░░░░░██───██░░░░░░░░░░██─██░░██──██░░██──██░░██─██░░██──██░░██───────██░░░░░░██─────────██░░░░░░██─────
+─██░░██─────────██░░██████░░████───██░░██████░░██─██░░██──██░░██──██░░██─██░░██──██░░██─────████░░░░░░████─────████░░░░░░████───
+─██░░██─────────██░░██──██░░██─────██░░██──██░░██─██░░██████░░██████░░██─██░░██──██░░██─────██░░░░██░░░░██─────██░░░░██░░░░██───
+─██░░██████████─██░░██──██░░██████─██░░██──██░░██─██░░░░░░░░░░░░░░░░░░██─██░░██████░░████─████░░██──██░░████─████░░██──██░░████─
+─██░░░░░░░░░░██─██░░██──██░░░░░░██─██░░██──██░░██─██░░██████░░██████░░██─██░░░░░░░░░░░░██─██░░░░██──██░░░░██─██░░░░██──██░░░░██─
+─██████████████─██████──██████████─██████──██████─██████──██████──██████─████████████████─████████──████████─████████──████████─
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     </pre>
 </div>
 
@@ -82,6 +35,7 @@
 <div id="settings" style="display: none;">
     <p>Settings Menu:</p>
     <button onclick="toggleShowTakenUsernames()">Toggle showing taken usernames (current: <span id="showTakenUsernamesStatus">On</span>)</button>
+    <button onclick="toggleTheme()">Switch to light theme</button>
     <button onclick="backToMainMenu()">Back to main menu</button>
 </div>
 
@@ -89,6 +43,7 @@
 
 <script>
     let showTakenUsernames = true;
+    let darkTheme = true;
 
     function generateRandomUsername(length = 5) {
         const characters = 'abcdefghijklmnopqrstuvwxyz0123456789_';
@@ -116,7 +71,7 @@
             }
         } catch (error) {
             console.error('Failed to fetch username data:', error);
-            return 'Network error'; // Handling fetch failure
+            return 'error'; // Handling fetch failure
         }
     }
 
@@ -132,15 +87,18 @@
             const randomUsername = generateRandomUsername();
             const isTaken = await checkRobloxUsernameExists(randomUsername);
 
-            if (isTaken === 'Network error') {
-                document.getElementById('results').innerHTML += `<p>${randomUsername} - Network issue: Unable to check username</p>`;
+            let resultText = `${randomUsername} - `;
+            if (isTaken === 'error') {
+                resultText += `<span style="color: white;">Network issue: Unable to check username</span>`;
             } else if (isTaken) {
                 if (showTakenUsernames) {
-                    document.getElementById('results').innerHTML += `<p>${randomUsername} - Account exists (taken)</p>`;
+                    resultText += `<span style="color: green;">Account exists (taken)</span>`;
                 }
             } else {
-                document.getElementById('results').innerHTML += `<p>${randomUsername} - Account does not exist (available)</p>`;
+                resultText += `<span style="color: black;">Account does not exist (available)</span>`;
             }
+
+            document.getElementById('results').innerHTML += `<p>${resultText}</p>`;
         }
     }
 
@@ -152,6 +110,12 @@
     function toggleShowTakenUsernames() {
         showTakenUsernames = !showTakenUsernames;
         document.getElementById('showTakenUsernamesStatus').textContent = showTakenUsernames ? 'On' : 'Off';
+    }
+
+    function toggleTheme() {
+        darkTheme = !darkTheme;
+        document.getElementById('theme-style').href = darkTheme ? 'dark-theme.css' : 'light-theme.css';
+        document.querySelector('#settings button:nth-of-type(2)').textContent = darkTheme ? 'Switch to light theme' : 'Switch to dark theme';
     }
 
     function backToMainMenu() {
