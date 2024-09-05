@@ -1,34 +1,18 @@
 const express = require('express');
-const axios = require('axios');
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-// Enable CORS
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+app.use(express.static('public'));
 
-// Route to check Roblox username
-app.get('/check-username', async (req, res) => {
+app.get('/check-username', (req, res) => {
     const { username } = req.query;
 
-    try {
-        const response = await axios.get(`https://www.roblox.com/users/profile?username=${username}`);
+    // Simulate username check
+    const exists = Math.random() < 0.5;
 
-        if (response.status === 200) {
-            res.json({ taken: true });
-        } else {
-            res.json({ taken: false });
-        }
-    } catch (error) {
-        console.error('Error fetching from Roblox:', error);
-        res.status(500).json({ error: 'Failed to check username' });
-    }
+    res.json({ exists });
 });
 
-// Start server
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
