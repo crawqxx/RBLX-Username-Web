@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
     <style>
-        /* Dark theme with larger sizes */
+        /* Dark theme with original sizes */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #1e1e1e;
             color: white; /* White text */
-            font-size: 1.32em; /* 110% of 1.2em */
+            font-size: 1.2em; /* Original text size */
         }
 
         #watermark {
             text-align: center;
             margin-top: 20px;
             color: #00bfff;
-            font-size: 1.65em; /* 110% of 1.5em */
+            font-size: 1.5em; /* Original watermark size */
         }
 
         #menu, #settings {
@@ -30,18 +30,18 @@
         #results {
             margin-top: 20px;
             text-align: center;
-            font-size: 1.32em; /* 110% of 1.2em */
+            font-size: 1.2em; /* Original results size */
         }
 
         button {
             margin: 15px;
-            padding: 16.5px 33px; /* 110% of 15px 30px */
+            padding: 15px 30px;
             cursor: pointer;
             background-color: #333;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 1.32em; /* 110% of 1.2em */
+            font-size: 1.2em; /* Original button size */
         }
 
         button:hover {
@@ -54,7 +54,7 @@
 
         p {
             color: white;
-            font-size: 1.32em; /* 110% of 1.2em */
+            font-size: 1.2em; /* Original paragraph size */
         }
     </style>
 </head>
@@ -69,7 +69,7 @@
     ╚█████╔╝██║░░██║██║░░██║░░╚██╔╝░╚██╔╝░░╚═██╔═╝░██╔╝╚██╗██╔╝╚██╗
     ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝
           
-          RBLX-Username v1.0 Beta
+    RBLX-Username v1.0 Beta
     </pre>
 </div>
 
@@ -107,9 +107,17 @@
     }
 
     async function checkRobloxUsernameExists(username) {
-        // Simulated check due to inability to query Roblox servers directly
-        const simulatedResponse = Math.random() < 0.5; // Randomly simulate existence
-        return simulatedResponse;
+        try {
+            const response = await fetch(`/check-username?username=${username}`, { method: 'GET' });
+            if (response.ok) {
+                return (await response.json()).exists;
+            } else {
+                return 'Network error';
+            }
+        } catch (error) {
+            console.error('Failed to fetch username data:', error);
+            return 'Network error'; // Handling fetch failure
+        }
     }
 
     async function startGenerating() {
