@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLX-Username v1.0 Beta</title>
-    <link id="theme-style" rel="stylesheet" href="dark-theme.css">
+    <link id="theme-style" rel="stylesheet" href="light-theme.css">
 </head>
 <body>
 
@@ -41,93 +41,7 @@
 
 <div id="results"></div>
 
-<script>
-    let showTakenUsernames = true;
-    let darkTheme = true;
-
-    function generateRandomUsername(length = 5) {
-        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789_';
-        let username = '';
-
-        while (true) {
-            for (let i = 0; i < length; i++) {
-                username += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-
-            if ((/\d/.test(username) || username.includes('_')) && !username.startsWith('_') && !username.endsWith('_')) {
-                return username;
-            }
-            username = ''; // Reset if invalid
-        }
-    }
-
-    async function checkRobloxUsernameExists(username) {
-        try {
-            const response = await fetch(`/check-username?username=${username}`, { method: 'GET' });
-            if (response.ok) {
-                return true; // Username exists
-            } else {
-                return false; // Username doesn't exist
-            }
-        } catch (error) {
-            console.error('Failed to fetch username data:', error);
-            return 'error'; // Handling fetch failure
-        }
-    }
-
-    async function startGenerating() {
-        const numberOfUsernames = prompt("Enter how many usernames you want to generate:");
-        if (!numberOfUsernames || isNaN(numberOfUsernames)) {
-            alert("Invalid input. Please enter a valid number.");
-            return;
-        }
-
-        document.getElementById('results').innerHTML = "Generating usernames...";
-        for (let i = 0; i < parseInt(numberOfUsernames); i++) {
-            const randomUsername = generateRandomUsername();
-            const isTaken = await checkRobloxUsernameExists(randomUsername);
-
-            let resultText = `${randomUsername} - `;
-            if (isTaken === 'error') {
-                resultText += `<span style="color: white;">Network issue: Unable to check username</span>`;
-            } else if (isTaken) {
-                if (showTakenUsernames) {
-                    resultText += `<span style="color: green;">Account exists (taken)</span>`;
-                }
-            } else {
-                resultText += `<span style="color: black;">Account does not exist (available)</span>`;
-            }
-
-            document.getElementById('results').innerHTML += `<p>${resultText}</p>`;
-        }
-    }
-
-    function openSettings() {
-        document.getElementById('menu').style.display = 'none';
-        document.getElementById('settings').style.display = 'block';
-    }
-
-    function toggleShowTakenUsernames() {
-        showTakenUsernames = !showTakenUsernames;
-        document.getElementById('showTakenUsernamesStatus').textContent = showTakenUsernames ? 'On' : 'Off';
-    }
-
-    function toggleTheme() {
-        darkTheme = !darkTheme;
-        document.getElementById('theme-style').href = darkTheme ? 'dark-theme.css' : 'light-theme.css';
-        document.querySelector('#settings button:nth-of-type(2)').textContent = darkTheme ? 'Switch to light theme' : 'Switch to dark theme';
-    }
-
-    function backToMainMenu() {
-        document.getElementById('settings').style.display = 'none';
-        document.getElementById('menu').style.display = 'block';
-    }
-
-    function exit() {
-        alert("Exiting...");
-        window.close();  // This will not work in most browsers unless initiated by user action
-    }
-</script>
+<script src="main.js"></script>
 
 </body>
 </html>
